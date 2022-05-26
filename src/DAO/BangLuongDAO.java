@@ -66,9 +66,9 @@ public class BangLuongDAO {
             String sql = 
                     "INSERT INTO `chitietluong`(`MaLuong`, `MaNV`, `ThuongPhat`, `HeSoLuong`, `NgayLapBang`, `NgaySuaDoi` \n) " +
                     "VALUES (?,?, \n" +
-                        "(SELECT SUM(khenthuongkyluat.SoTien) \n" +
+                        "IFNULL((SELECT SUM(khenthuongkyluat.SoTien) \n" +
                         "FROM chitietktkl JOIN khenthuongkyluat ON chitietktkl.MaKTKL = khenthuongkyluat.MaKTKL \n" +
-                        "WHERE chitietktkl.MaNV = ? AND YEAR(khenthuongkyluat.NgayQuyetDinh) = YEAR(CURRENT_DATE) AND MONTH(khenthuongkyluat.NgayQuyetDinh) = MONTH(CURRENT_DATE)),\n" +
+                        "WHERE chitietktkl.MaNV = ? AND YEAR(khenthuongkyluat.NgayQuyetDinh) = YEAR(CURRENT_DATE) AND MONTH(khenthuongkyluat.NgayQuyetDinh) = MONTH(CURRENT_DATE)),0),\n" +
                         "(SELECT hesoluong.HeSoLuong \n" +
                         "FROM hesoluong JOIN nhanvien ON hesoluong.MaHSL = nhanvien.MaHSL AND nhanvien.MaNV = ?)\n" +
                     ",CURRENT_DATE, CURRENT_DATE);";
